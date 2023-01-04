@@ -17,13 +17,17 @@ class ImageCollectionViewController: UIViewController {
     var rootView: ImageCollectionView {
         return view as! ImageCollectionView
     }
-    
     var viewModel: ImageCollectionViewModelType = ImageCollectionViewModel()
     
     // MARK: Private
     private var disposeBag: DisposeBag! = DisposeBag()
+    private var visibleIndexPath: IndexPath?
+    private var imageScale: CGFloat {
+        return 0.5 * traitCollection.displayScale
+    }
     
-    // MARK: - Controller Lifecycle -
+    // MARK: - Internal API -
+    // MARK: Controller Lifecycle
     
     override func loadView() {
         view = ImageCollectionView(frame: UIScreen.main.bounds)
@@ -36,12 +40,14 @@ class ImageCollectionViewController: UIViewController {
         
         viewModel.imageViewModels.subscribe { [weak self] pictures in
             guard let strongSelf = self else { return }
+            
+            let picturesCount = min(2, pictures.count)
+            for i in 0 ..< picturesCount {
+                strongSelf.viewModel.downloadImage(at: i, scale: strongSelf.imageScale)
+            }
+            
             strongSelf.rootView.collectionView.reloadData()
         }.disposed(by: disposeBag)
-//        viewModel.imageDownloaded.subscribe { [weak self] index in
-//            guard let strongSelf = self else { return }
-//            strongSelf.viewModel.downloadImage(at: index, scale: 0.2 * strongSelf.traitCollection.displayScale)
-//        }.disposed(by: disposeBag)
     }
     
     deinit {
@@ -77,7 +83,7 @@ extension ImageCollectionViewController: UICollectionViewDataSource, UICollectio
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let index = indexPath.row
         let size = viewModel.imageViewModels.value[index].actualSize.value
-        return size.fittingInScreen(scale: 0.75)
+        return size.fittingInScreen(scale: 1)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -87,7 +93,15 @@ extension ImageCollectionViewController: UICollectionViewDataSource, UICollectio
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             // Download thumbnail at 20% of original size and accounting for screen's display scale
-            viewModel.downloadImage(at: indexPath.row, scale: 0.2 * traitCollection.displayScale)
+            viewModel.downloadImage(at: indexPath.row, scale: imageScale)
         }
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard targetContentOffset.pointee.x >= CGRectGetMaxX(scrollView.bounds) -  UIScreen.main.bounds.width else {
+            return
+        }
+        
+        viewModel.retrieveNextSetOfImages()
     }
 }

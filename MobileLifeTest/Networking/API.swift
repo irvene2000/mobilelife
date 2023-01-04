@@ -11,14 +11,14 @@ import RxSwift
 import SwiftyJSON
 
 protocol APIType {
-    static func retrieveImages() -> Single<[Picture]>
+    static func retrieveImages(page: Int) -> Single<[Picture]>
 }
 
 enum API: APIType {
     static var disposeBag = DisposeBag()
     
-    static func retrieveImages() -> Single<[Picture]> {
-        RxAlamofire.request(.get, "https://picsum.photos/v2/list")
+    static func retrieveImages(page: Int = 1) -> Single<[Picture]> {
+        RxAlamofire.request(.get, "https://picsum.photos/v2/list?page=\(page)&limit=10")
             .responseData()
             .map({ (_, data) in
                 return try JSONDecoder().decode([Picture].self, from: data)

@@ -10,10 +10,40 @@ import UIKit
 
 class SnappingCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
+    // MARK: - Properties -
+    // MARK: Private
+    
+    private var visibleIndexPath: IndexPath?
+    
     override func prepare() {
         super.prepare()
         
         scrollDirection = .horizontal
+    }
+    
+    override func prepare(forAnimatedBoundsChange oldBounds: CGRect) {
+        super.prepare(forAnimatedBoundsChange: oldBounds)
+        
+        visibleIndexPath = collectionView?.indexPathsForVisibleItems.sorted(by: { $0.row < $1.row })[1]
+    }
+    
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+        guard let visibleIndexPath = visibleIndexPath,
+              let attributes = layoutAttributesForItem(at: visibleIndexPath) else {
+            return super.targetContentOffset(forProposedContentOffset: proposedContentOffset)
+        }
+        
+        var screenWidth: CGFloat
+        let currentOrientation = UIDevice.current.orientation
+        if currentOrientation == .landscapeLeft || currentOrientation == .landscapeRight {
+            screenWidth = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+        }
+        else {
+            screenWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+        }
+       
+        let widthDifference = screenWidth - attributes.size.width
+        return CGPoint(x: attributes.frame.origin.x - (widthDifference / 2.0), y: proposedContentOffset.y)
     }
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
@@ -29,6 +59,12 @@ class SnappingCollectionViewFlowLayout: UICollectionViewFlowLayout {
                 closestLayoutAttributes = layoutAttributes
             }
         })
+        
         return CGPoint(x: closestLayoutAttributes.center.x - (screenSize.width / 2.0), y: proposedContentOffset.y)
+    }
+    
+    override func finalizeAnimatedBoundsChange() {
+        super.finalizeAnimatedBoundsChange()
+        visibleIndexPath = nil
     }
 }

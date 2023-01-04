@@ -29,6 +29,6 @@ extension CGSize {
             resizedHeight = maxCellHeight
         }
         
-        return CGSize(width: resizedWidth, height: resizedHeight)
+        return CGSize(width: resizedWidth * scale, height: resizedHeight * scale)
     }
 }

@@ -15,6 +15,7 @@ protocol ImageCollectionViewModelType {
     var imageViewModels: BehaviorRelay<[ImageCollectionViewCellViewModelType]> { get }
     
     func downloadImage(at index: Int, scale: CGFloat)
+    func retrieveNextSetOfImages()
 }
 
 class ImageCollectionViewModel: ImageCollectionViewModelType {
@@ -31,16 +32,15 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     private var imageCache = [String: UIImage]()
     private var disposeBag: DisposeBag! = DisposeBag()
     private var api: APIType.Type = API.self
+    private var pageCount: Int = 1
+    private var isLoadingImages: Bool = false
     
     // MARK: - Initializer -
     
     init() {
         setupListeners()
         
-        api.retrieveImages().subscribe { [weak self] pictures in
-            guard let strongSelf = self else { return }
-            strongSelf.images.accept(pictures)
-        }.disposed(by: disposeBag)
+        retrieveNextSetOfImages()
     }
     
     deinit {
@@ -50,6 +50,8 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     // MARK: - Internal API -
     
     func downloadImage(at index: Int, scale: CGFloat) {
+        guard index < images.value.count else { return }
+        
         let picture = images.value[index]
         let actualPictureSize = CGSize(width: picture.width, height: picture.height)
         let imageSizeFittingInScreen = actualPictureSize.fittingInScreen(scale: scale)
@@ -68,19 +70,39 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
         }
     }
     
+    func retrieveNextSetOfImages() {
+        guard !isLoadingImages else { return }
+        
+        isLoadingImages = true
+        
+        api.retrieveImages(page: pageCount).subscribe { [weak self] pictures in
+                guard let strongSelf = self else { return }
+            var imageList = strongSelf.images.value
+            imageList.append(contentsOf: pictures)
+            strongSelf.images.accept(imageList)
+                strongSelf.pageCount += 1
+            strongSelf.isLoadingImages = false
+        } onFailure: { [weak self] error in
+            guard let strongSelf = self else { return }
+            strongSelf.isLoadingImages = false
+        }.disposed(by: disposeBag)
+    }
+    
     // MARK: - Private API -
     
     private func setupListeners() {
-        images.map { pictures in
-            let viewModels = pictures.map { picture in
+        images.subscribe { [weak self] pictures in
+            guard let strongSelf = self else { return }
+            let newImageViewModels = pictures.map { picture in
                 let imageViewModel = ImageCollectionViewCellViewModel()
                 imageViewModel.actualSize.accept(CGSize(width: picture.width, height: picture.height))
                 return imageViewModel
             }
-            return viewModels
-            }
-        .bind(to: imageViewModels)
-            .disposed(by: disposeBag)
+            
+            var imageList = strongSelf.imageViewModels.value
+            imageList.append(contentsOf: newImageViewModels)
+            strongSelf.imageViewModels.accept(imageList)
+        }.disposed(by: disposeBag)
     }
     
     private func downloadImage(at url: URL, completion: @escaping ((UIImage?) -> Void)) {

@@ -47,7 +47,8 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     private func rebindViewModel() {
         viewModel?.image.subscribe(onNext: { [weak self] image in
-            self?.imageView.image = image
+            guard let strongSelf = self else { return }
+            strongSelf.imageView.image = image
         }).disposed(by: disposeBag)
     }
     

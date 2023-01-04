@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let rootViewController = ImageCollectionViewController()
         let navigationController = UINavigationController(rootViewController: rootViewController)
+        Coordinator.navigationController = navigationController
         window.rootViewController = navigationController
         
         self.window = window

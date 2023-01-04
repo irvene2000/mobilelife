@@ -11,8 +11,9 @@ import RxAlamofire
 import RxCocoa
 
 protocol ImageCollectionViewModelType {
-    var imageDownloaded: PublishRelay<Int> { get }
+    var imageDownloaded: PublishRelay<(Int, UIImage)> { get }
     var imageViewModels: BehaviorRelay<[ImageCollectionViewCellViewModelType]> { get }
+    var images: BehaviorRelay<[Picture]> { get }
     
     func downloadImage(at index: Int, scale: CGFloat)
     func retrieveNextSetOfImages()
@@ -22,13 +23,12 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     // MARK: - Properties -
     // MARK: Internal
     
-    var imageDownloaded = PublishRelay<Int>()
+    var imageDownloaded = PublishRelay<(Int, UIImage)>()
     var imageViewModels: BehaviorRelay<[ImageCollectionViewCellViewModelType]> = BehaviorRelay(value: [])
+    var images: BehaviorRelay<[Picture]> = BehaviorRelay(value: [])
     
     // MARK: Private
     
-    private var images: BehaviorRelay<[Picture]> = BehaviorRelay(value: [])
-//    private var thumbnailCache = [String: UIImage]()
     private var imageCache = [String: UIImage]()
     private var disposeBag: DisposeBag! = DisposeBag()
     private var api: APIType.Type = API.self
@@ -58,15 +58,21 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
         let thumbnailURLString = "https://picsum.photos/id/\(picture.id)/\(Int(imageSizeFittingInScreen.width))/\(Int(imageSizeFittingInScreen.height))"
         
         guard let url = URL(string: thumbnailURLString) else { return }
-        guard imageCache[picture.id] == nil else {
-            imageDownloaded.accept(index)
+        let cachedImage = imageCache[picture.id]
+        guard cachedImage == nil else {
+            imageDownloaded.accept((index, cachedImage!))
             return
         }
         
-        downloadImage(at: url) { image in
-            self.imageCache[picture.id] = image
-            self.imageViewModels.value[index].image.accept(image)
-            self.imageDownloaded.accept(index)
+        downloadImage(at: url) { [weak self] image in
+            guard let strongSelf = self else { return }
+            strongSelf.imageCache[picture.id] = image
+            strongSelf.imageViewModels.value[index].image.accept(image)
+            strongSelf.imageDownloaded.accept((index, image))
+            
+            var pictures = strongSelf.images.value
+            pictures[index].image = image
+            strongSelf.images.accept(pictures)
         }
     }
     
@@ -105,11 +111,11 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
         }.disposed(by: disposeBag)
     }
     
-    private func downloadImage(at url: URL, completion: @escaping ((UIImage?) -> Void)) {
+    private func downloadImage(at url: URL, completion: @escaping ((UIImage) -> Void)) {
         DispatchQueue.global().async {
             guard let data = try? Data(contentsOf: url) else { return }
            
-            let image = UIImage(data: data)
+            guard let image = UIImage(data: data) else { return }
             
             DispatchQueue.main.async {
                 completion(image)

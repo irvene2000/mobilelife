@@ -61,6 +61,8 @@ class TitleValueTableViewCell: UITableViewCell {
     // MARK: - Private API -
     
     private func setupSubviews() {
+        selectionStyle = .none
+        
         contentView.addSubview(titleLabel)
         contentView.addSubview(valueLabel)
         

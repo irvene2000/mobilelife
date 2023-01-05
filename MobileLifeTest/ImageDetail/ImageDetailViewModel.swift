@@ -17,6 +17,10 @@ protocol ImageDetailViewModelType {
     var identifierRelay: BehaviorRelay<TitleValueTableViewCellViewModelType> { get }
     var urlRelay: BehaviorRelay<TitleValueTableViewCellViewModelType> { get }
     var downloadURLRelay: BehaviorRelay<TitleValueTableViewCellViewModelType> { get }
+    
+    func toggleNormalImage()
+    func toggleBlurredImage(blurIndex: Int)
+    func toggleGrayscaleImage()
 }
 
 class ImageDetailViewModel: ImageDetailViewModelType {
@@ -35,9 +39,15 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     // MARK: Private
     
     private var disposeBag: DisposeBag! = DisposeBag()
+    private let normalKey = "Normal"
+    private let blurredKey = "Blur"
+    private let grayscaleKey = "GrayScale"
+    private var imageCache = [String: UIImage]()
     
     init(picture: Picture) {
         imageRelay = BehaviorRelay(value: picture.image)
+        
+        imageCache[normalKey] = picture.image
         
         let segmentedViewModel = SegmentedControlTableViewCellViewModel()
         segmentsRelay = BehaviorRelay(value: segmentedViewModel)
@@ -73,6 +83,33 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     
     deinit {
         disposeBag = nil
+    }
+    
+    // MARK: ImageDetailViewModel Actions
+    
+    func toggleNormalImage() {
+        retrieveImage(key: normalKey)
+    }
+    
+    func toggleBlurredImage(blurIndex: Int) {
+        let blurIndexKey = "\(blurredKey)-\(blurIndex)"
+        retrieveImage(key: blurIndexKey)
+    }
+    
+    func toggleGrayscaleImage() {
+        retrieveImage(key: grayscaleKey)
+    }
+    
+    // MARK: - Private API -
+    // MARK: Convenience Methods
+    
+    private func retrieveImage(key: String){
+        if let cachedImage = imageCache[key] {
+            imageRelay.accept(cachedImage)
+        }
+        else {
+            imageRelay.accept(nil)
+        }
     }
 }
 

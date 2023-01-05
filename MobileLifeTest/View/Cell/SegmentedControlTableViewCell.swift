@@ -51,6 +51,8 @@ class SegmentedControlTableViewCell: UITableViewCell {
     // MARK: - Private API -
     
     private func setupSubviews() {
+        selectionStyle = .none
+        
         contentView.addSubview(segmentedControl)
         
         let segmentedControlLeadingConstraint = segmentedControl.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 20.0)

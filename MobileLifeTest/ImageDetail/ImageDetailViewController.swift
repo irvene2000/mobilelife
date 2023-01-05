@@ -91,13 +91,13 @@ extension ImageDetailViewController: UITableViewDelegate, UITableViewDataSource 
             newCell.viewModel = viewModel.segmentsRelay.value
             let actions = [
                 UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Normal", comment: "Normal Segment"), handler: { action in
-                    
+                    self.viewModel.toggleNormalImage()
                 }),
                 UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Blur", comment: "Blur Segment"), handler: { action in
-                    
+                    self.viewModel.toggleBlurredImage(blurIndex: 0)
                 }),
                 UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Grayscale", comment: "Grayscale Segment"), handler: { action in
-                    
+                    self.viewModel.toggleGrayscaleImage()
                 })
             ]
             viewModel.segmentsRelay.value.segments.accept(actions)

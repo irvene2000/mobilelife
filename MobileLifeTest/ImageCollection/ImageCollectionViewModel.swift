@@ -29,7 +29,6 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     
     // MARK: Private
     
-    private var imageCache = [String: UIImage]()
     private var disposeBag: DisposeBag! = DisposeBag()
     private var api: APIType.Type = API.self
     private var pageCount: Int = 1
@@ -51,20 +50,17 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
         guard index < images.value.count else { return }
         
         let picture = images.value[index]
-        let actualPictureSize = CGSize(width: picture.width, height: picture.height)
-        let imageSizeFittingInScreen = actualPictureSize.fittingInScreen(scale: scale)
-        let thumbnailURLString = "https://picsum.photos/id/\(picture.id)/\(Int(imageSizeFittingInScreen.width))/\(Int(imageSizeFittingInScreen.height))"
+        let cachedImage = picture.imageCache[.normal]
         
-        guard let url = URL(string: thumbnailURLString) else { return }
-        let cachedImage = imageCache[picture.id]
         guard cachedImage == nil else {
             imageDownloaded.accept((index, cachedImage!))
             return
         }
         
-        downloadImage(at: url) { [weak self] image in
+        let imageSizeFittingInScreen = picture.imageSizeFittingInScreen(scale: scale)
+        
+        api.downloadImage(id: picture.id, size: CGSize(width: imageSizeFittingInScreen.width, height: imageSizeFittingInScreen.height), variant: .normal) { [weak self] image in
             guard let strongSelf = self else { return }
-            strongSelf.imageCache[picture.id] = image
             strongSelf.imageViewModels.value[index].image.accept(image)
             strongSelf.imageDownloaded.accept((index, image))
             
@@ -106,19 +102,6 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
         var imageList = imageViewModels.value
         imageList.append(contentsOf: newImageViewModels)
         imageViewModels.accept(imageList)
-    }
-
-    
-    private func downloadImage(at url: URL, completion: @escaping ((UIImage) -> Void)) {
-        DispatchQueue.global().async {
-            guard let data = try? Data(contentsOf: url) else { return }
-           
-            guard let image = UIImage(data: data) else { return }
-            
-            DispatchQueue.main.async {
-                completion(image)
-            }
-        }
     }
 }
 

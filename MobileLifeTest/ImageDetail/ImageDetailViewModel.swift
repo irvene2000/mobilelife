@@ -38,6 +38,7 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     
     // MARK: Private
     
+    private var api: APIType.Type = API.self
     private let selectedPictureIndex: Int
     private weak var picturesRelay: BehaviorRelay<[Picture]>?
     private var disposeBag: DisposeBag! = DisposeBag()
@@ -99,28 +100,40 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     
     func toggleNormalImage() {
         selectedVariant = .normal
-        retrieveImage(key: normalKey)
+        retrieveImage(variant: .normal)
     }
     
     func toggleBlurredImage(blurIndex: Int) {
         selectedVariant = .blur(index: blurIndex)
-        let blurIndexKey = "\(blurredKey)-\(blurIndex)"
-        retrieveImage(key: blurIndexKey)
+        retrieveImage(variant: .blur(index: blurIndex))
     }
     
     func toggleGrayscaleImage() {
         selectedVariant = .grayscale
-        retrieveImage(key: grayscaleKey)
+        retrieveImage(variant: .grayscale)
     }
     
     // MARK: - Private API -
     // MARK: Convenience Methods
     
-    private func retrieveImage(key: String){
-        if let picture = picturesRelay?.value[selectedPictureIndex] {
-            imageRelay.accept(picture.imageCache[selectedVariant])
+    private func retrieveImage(variant: PictureVariant){
+        guard var pictures = picturesRelay?.value,
+        selectedPictureIndex < pictures.count else { return }
+        
+        var picture = pictures[selectedPictureIndex]
+        
+        if let cachedImage = picture.imageCache[selectedVariant] {
+            imageRelay.accept(cachedImage)
         }
         else {
+            imageRelay.accept(nil)
+            api.downloadImage(id: picture.id, size: picture.imageSizeFittingInScreen(), variant: variant) { [weak self] image in
+                guard let strongSelf = self else { return }
+                picture.imageCache[variant] = image
+                pictures[strongSelf.selectedPictureIndex] = picture
+                strongSelf.picturesRelay?.accept(pictures)
+                strongSelf.retrieveImage(variant: variant)
+            }
         }
     }
 }

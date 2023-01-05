@@ -94,7 +94,7 @@ extension ImageDetailViewController: UITableViewDelegate, UITableViewDataSource 
                     self.viewModel.toggleNormalImage()
                 }),
                 UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Blur", comment: "Blur Segment"), handler: { action in
-                    self.viewModel.toggleBlurredImage(blurIndex: 0)
+                    self.viewModel.toggleBlurredImage(blurIndex: 5)
                 }),
                 UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Grayscale", comment: "Grayscale Segment"), handler: { action in
                     self.viewModel.toggleGrayscaleImage()

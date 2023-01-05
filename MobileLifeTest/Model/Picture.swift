@@ -54,3 +54,10 @@ struct Picture: Codable {
         case imageCache
     }
 }
+
+extension Picture {
+    func imageSizeFittingInScreen(scale: CGFloat = 1.0) -> CGSize {
+        let actualPictureSize = CGSize(width: width, height: height)
+        return actualPictureSize.fittingInScreen(scale: scale)
+    }
+}

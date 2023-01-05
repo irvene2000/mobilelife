@@ -49,6 +49,11 @@ class ImageDetailViewController: UIViewController {
             guard let strongSelf = self else { return }
             strongSelf.rootView.imageView.image = image
         }.disposed(by: disposeBag)
+        
+        rootView.infoTableView.delegate = self
+        rootView.infoTableView.dataSource = self
+        rootView.infoTableView.register(TitleValueTableViewCell.self, forCellReuseIdentifier: "TitleValueTableViewCell")
+        rootView.infoTableView.register(SegmentedControlTableViewCell.self, forCellReuseIdentifier: "SegmentedControlTableViewCell")
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -58,5 +63,67 @@ class ImageDetailViewController: UIViewController {
     
     deinit {
         disposeBag = nil
+    }
+}
+
+extension ImageDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 5
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: UITableViewCell!
+        
+        switch indexPath.section {
+        case 0:
+            let newCell = tableView.dequeueReusableCell(withIdentifier: "SegmentedControlTableViewCell", for: indexPath) as! SegmentedControlTableViewCell
+            newCell.viewModel = viewModel.segmentsRelay.value
+            let actions = [
+                UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Normal", comment: "Normal Segment"), handler: { action in
+                    
+                }),
+                UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Blur", comment: "Blur Segment"), handler: { action in
+                    
+                }),
+                UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Grayscale", comment: "Grayscale Segment"), handler: { action in
+                    
+                })
+            ]
+            viewModel.segmentsRelay.value.segments.accept(actions)
+            viewModel.segmentsRelay.value.selectedSegmentIndex.accept(0)
+            cell = newCell
+        case 1:
+            let newCell = tableView.dequeueReusableCell(withIdentifier: "TitleValueTableViewCell", for: indexPath) as! TitleValueTableViewCell
+            switch indexPath.row {
+            case 0:
+                newCell.viewModel = viewModel.authorRelay.value
+            case 1:
+                newCell.viewModel = viewModel.dimensionRelay.value
+            case 2:
+                newCell.viewModel = viewModel.identifierRelay.value
+            case 3:
+                newCell.viewModel = viewModel.urlRelay.value
+            case 4:
+                newCell.viewModel = viewModel.downloadURLRelay.value
+            default:
+                break
+            }
+            cell = newCell
+        default:
+            break
+        }
+        
+        return cell
     }
 }

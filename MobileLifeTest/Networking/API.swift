@@ -18,7 +18,7 @@ enum API: APIType {
     static var disposeBag = DisposeBag()
     
     static func retrieveImages(page: Int = 1) -> Single<[Picture]> {
-        RxAlamofire.request(.get, "https://picsum.photos/v2/list?page=\(page)&limit=10")
+        RxAlamofire.request(.get, "https://picsum.photos/v2/list?page=\(page)")
             .responseData()
             .map({ (_, data) in
                 return try JSONDecoder().decode([Picture].self, from: data)

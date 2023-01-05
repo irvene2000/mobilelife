@@ -19,6 +19,11 @@ class ImageDetailView: UIView {
         newImageView.translatesAutoresizingMaskIntoConstraints = false
         return newImageView
     }()
+    var infoTableView: UITableView = {
+        let newTableView = UITableView(frame: .zero, style: .plain)
+        newTableView.translatesAutoresizingMaskIntoConstraints = false
+        return newTableView
+    }()
     
     // MARK: Private
     
@@ -41,6 +46,7 @@ class ImageDetailView: UIView {
         newView.backgroundColor = .white
         return newView
     }()
+    
     private var secondaryViewHeightConstraint: NSLayoutConstraint!
     private var secondaryViewWidthConstraint: NSLayoutConstraint!
     
@@ -85,15 +91,16 @@ class ImageDetailView: UIView {
         stackView.addArrangedSubview(primaryView)
         primaryView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(secondaryView)
+        secondaryView.addArrangedSubview(infoTableView)
         
         secondaryViewHeightConstraint = secondaryView.heightAnchor.constraint(equalToConstant: 0)
         secondaryViewWidthConstraint = secondaryView.widthAnchor.constraint(equalToConstant: 0)
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             secondaryViewHeightConstraint,
             secondaryViewWidthConstraint
         ])

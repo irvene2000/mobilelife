@@ -38,8 +38,6 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     // MARK: - Initializer -
     
     init() {
-        setupListeners()
-        
         retrieveNextSetOfImages()
     }
     
@@ -85,8 +83,8 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
                 guard let strongSelf = self else { return }
             var imageList = strongSelf.images.value
             imageList.append(contentsOf: pictures)
-            strongSelf.images.accept(imageList)
-                strongSelf.pageCount += 1
+            strongSelf.processPictures(pictures: imageList)
+            strongSelf.pageCount += 1
             strongSelf.isLoadingImages = false
         } onFailure: { [weak self] error in
             guard let strongSelf = self else { return }
@@ -96,20 +94,20 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     
     // MARK: - Private API -
     
-    private func setupListeners() {
-        images.subscribe { [weak self] pictures in
-            guard let strongSelf = self else { return }
-            let newImageViewModels = pictures.map { picture in
-                let imageViewModel = ImageCollectionViewCellViewModel()
-                imageViewModel.actualSize.accept(CGSize(width: picture.width, height: picture.height))
-                return imageViewModel
-            }
-            
-            var imageList = strongSelf.imageViewModels.value
-            imageList.append(contentsOf: newImageViewModels)
-            strongSelf.imageViewModels.accept(imageList)
-        }.disposed(by: disposeBag)
+    private func processPictures(pictures: [Picture]) {
+        images.accept(pictures)
+        
+        let newImageViewModels = pictures.map { picture in
+            let imageViewModel = ImageCollectionViewCellViewModel()
+            imageViewModel.actualSize.accept(CGSize(width: picture.width, height: picture.height))
+            return imageViewModel
+        }
+
+        var imageList = imageViewModels.value
+        imageList.append(contentsOf: newImageViewModels)
+        imageViewModels.accept(imageList)
     }
+
     
     private func downloadImage(at url: URL, completion: @escaping ((UIImage) -> Void)) {
         DispatchQueue.global().async {

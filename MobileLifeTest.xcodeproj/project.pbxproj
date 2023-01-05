@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		014385BE2966698A00E754E9 /* SegmentedControlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014385BD2966698A00E754E9 /* SegmentedControlTableViewCell.swift */; };
 		0168CC98295DA07600B093CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168CC97295DA07600B093CE /* AppDelegate.swift */; };
 		0168CC9A295DA07600B093CE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168CC99295DA07600B093CE /* SceneDelegate.swift */; };
 		0168CC9C295DA07600B093CE /* ImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168CC9B295DA07600B093CE /* ImageCollectionViewController.swift */; };
@@ -28,6 +29,8 @@
 		019F8D8C2965471600685589 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D8B2965471600685589 /* ImageDetailViewController.swift */; };
 		019F8D8E29654DC000685589 /* ImageDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D8D29654DC000685589 /* ImageDetailViewModel.swift */; };
 		019F8D9029654E6000685589 /* ImageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D8F29654E6000685589 /* ImageDetailView.swift */; };
+		019F8D92296564A000685589 /* TitleValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D91296564A000685589 /* TitleValueTableViewCell.swift */; };
+		019F8D9529665EED00685589 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 019F8D9729665EED00685589 /* Localizable.strings */; };
 		466DBCBBF50A0A1C3C7321D3 /* libPods-MobileLifeTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3B407EEA02BE28DCD9DAD16 /* libPods-MobileLifeTest.a */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		014385BD2966698A00E754E9 /* SegmentedControlTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlTableViewCell.swift; sourceTree = "<group>"; };
 		0168CC94295DA07600B093CE /* MobileLifeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobileLifeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0168CC97295DA07600B093CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0168CC99295DA07600B093CE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 		019F8D8B2965471600685589 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		019F8D8D29654DC000685589 /* ImageDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewModel.swift; sourceTree = "<group>"; };
 		019F8D8F29654E6000685589 /* ImageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailView.swift; sourceTree = "<group>"; };
+		019F8D91296564A000685589 /* TitleValueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleValueTableViewCell.swift; sourceTree = "<group>"; };
+		019F8D9629665EED00685589 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		295AB571550CCF4F1C22C378 /* Pods-MobileLifeTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLifeTest.debug.xcconfig"; path = "Target Support Files/Pods-MobileLifeTest/Pods-MobileLifeTest.debug.xcconfig"; sourceTree = "<group>"; };
 		5240E93AEE3E03C4BEA884E4 /* Pods-MobileLifeTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLifeTest.release.xcconfig"; path = "Target Support Files/Pods-MobileLifeTest/Pods-MobileLifeTest.release.xcconfig"; sourceTree = "<group>"; };
 		D3B407EEA02BE28DCD9DAD16 /* libPods-MobileLifeTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MobileLifeTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +149,7 @@
 				0168CCA5295DA07600B093CE /* LaunchScreen.storyboard */,
 				0168CCA8295DA07700B093CE /* Info.plist */,
 				0168CCA0295DA07600B093CE /* MobileLifeTest.xcdatamodeld */,
+				019F8D9729665EED00685589 /* Localizable.strings */,
 			);
 			path = MobileLifeTest;
 			sourceTree = "<group>";
@@ -204,6 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				019F8D7E295DC4CA00685589 /* ImageCollectionViewCell.swift */,
+				019F8D91296564A000685589 /* TitleValueTableViewCell.swift */,
+				014385BD2966698A00E754E9 /* SegmentedControlTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -365,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0168CCA7295DA07700B093CE /* LaunchScreen.storyboard in Resources */,
+				019F8D9529665EED00685589 /* Localizable.strings in Resources */,
 				0168CCA4295DA07600B093CE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,9 +431,11 @@
 				0168CCD1295DA85C00B093CE /* ImageCollectionViewModel.swift in Sources */,
 				019F8D892965469500685589 /* Coordinator.swift in Sources */,
 				019F8D77295DB45900685589 /* URLType.swift in Sources */,
+				019F8D92296564A000685589 /* TitleValueTableViewCell.swift in Sources */,
 				019F8D75295DB3DD00685589 /* Picture.swift in Sources */,
 				0168CCCE295DA47800B093CE /* ImageCollectionView.swift in Sources */,
 				0168CC9C295DA07600B093CE /* ImageCollectionViewController.swift in Sources */,
+				014385BE2966698A00E754E9 /* SegmentedControlTableViewCell.swift in Sources */,
 				0168CC98295DA07600B093CE /* AppDelegate.swift in Sources */,
 				019F8D7F295DC4CA00685589 /* ImageCollectionViewCell.swift in Sources */,
 				019F8D8C2965471600685589 /* ImageDetailViewController.swift in Sources */,
@@ -473,6 +485,14 @@
 				0168CCA6295DA07700B093CE /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		019F8D9729665EED00685589 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				019F8D9629665EED00685589 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  MobileLifeTest
+
+  Created by Tan Way Loon on 05/01/2023.
+  
+*/
+
+"ImageDetailViewController.SegmentTitle.Normal" = "Normal";
+"ImageDetailViewController.SegmentTitle.Blur" = "Blur";
+"ImageDetailViewController.SegmentTitle.Grayscale" = "Grayscale";
+"ImageDetailViewController.TitleLabel.Author" = "Author";
+"ImageDetailViewController.TitleLabel.Dimensions" = "Dimension (W/H)";
+"ImageDetailViewController.TitleLabel.Identifier" = "Image Id";
+"ImageDetailViewController.TitleLabel.URL" = "URL";
+"ImageDetailViewController.TitleLabel.DownloadURL" = "Download URL";

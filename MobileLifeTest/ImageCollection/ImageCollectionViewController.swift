@@ -106,7 +106,6 @@ extension ImageCollectionViewController: UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let picture = viewModel.images.value[indexPath.row]
-        Coordinator.navigateToImageDetail(picture: picture)
+        Coordinator.navigateToImageDetail(selectedPictureIndex: indexPath.row, pictures: viewModel.images)
     }
 }

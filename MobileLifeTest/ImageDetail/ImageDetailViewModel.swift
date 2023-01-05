@@ -28,7 +28,7 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     // MARK: - Properties -
     // MARK: Internal
     
-    var imageRelay: BehaviorRelay<UIImage?>
+    var imageRelay: BehaviorRelay<UIImage?> = BehaviorRelay(value: nil)
     var segmentsRelay: BehaviorRelay<SegmentedControlTableViewCellViewModelType>
     var authorRelay: BehaviorRelay<TitleValueTableViewCellViewModelType>
     var dimensionRelay: BehaviorRelay<TitleValueTableViewCellViewModelType>
@@ -38,16 +38,19 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     
     // MARK: Private
     
+    private let selectedPictureIndex: Int
+    private weak var picturesRelay: BehaviorRelay<[Picture]>?
     private var disposeBag: DisposeBag! = DisposeBag()
     private let normalKey = "Normal"
     private let blurredKey = "Blur"
     private let grayscaleKey = "GrayScale"
     private var imageCache = [String: UIImage]()
     
-    init(picture: Picture) {
-        imageRelay = BehaviorRelay(value: picture.image)
+    init(selectedPictureIndex: Int, pictures: BehaviorRelay<[Picture]>) {
+        self.selectedPictureIndex = selectedPictureIndex
+        picturesRelay = pictures
         
-        imageCache[normalKey] = picture.image
+        let picture = pictures.value[selectedPictureIndex]
         
         let segmentedViewModel = SegmentedControlTableViewCellViewModel()
         segmentsRelay = BehaviorRelay(value: segmentedViewModel)
@@ -76,6 +79,13 @@ class ImageDetailViewModel: ImageDetailViewModelType {
         downloadURLViewModel.titleRelay.accept(NSLocalizedString("ImageDetailViewController.TitleLabel.DownloadURL", comment: "Download URL Title Label"))
         downloadURLViewModel.valueRelay.accept(picture.url.value?.absoluteString ?? "")
         downloadURLRelay = BehaviorRelay(value: downloadURLViewModel)
+        
+        picturesRelay?.subscribe { [weak self] pictures in
+            guard let strongSelf = self else { return }
+            let picture = pictures[strongSelf.selectedPictureIndex]
+            strongSelf.imageRelay.accept(picture.image)
+            strongSelf.imageCache[strongSelf.normalKey] = picture.image
+        }.disposed(by: disposeBag)
     }
     
     // MARK: - Internal API -
@@ -104,11 +114,14 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     // MARK: Convenience Methods
     
     private func retrieveImage(key: String){
-        if let cachedImage = imageCache[key] {
-            imageRelay.accept(cachedImage)
+        if let picture = picturesRelay?.value[selectedPictureIndex] {
+            
+        }
+        else if let cachedImage = imageCache[key] {
+//            imageRelay?.accept(cachedImage)
         }
         else {
-            imageRelay.accept(nil)
+//            imageRelay?.accept(nil)
         }
     }
 }

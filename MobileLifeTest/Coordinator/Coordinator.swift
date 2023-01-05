@@ -7,12 +7,14 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 enum Coordinator {
     static var navigationController: UINavigationController!
 
-    static func navigateToImageDetail(picture: Picture) {
-        let viewModel = ImageDetailViewModel(picture: picture)
+    static func navigateToImageDetail(selectedPictureIndex: Int, pictures: BehaviorRelay<[Picture]>) {
+        let viewModel = ImageDetailViewModel(selectedPictureIndex: selectedPictureIndex, pictures: pictures)
         let imageDetailViewController = ImageDetailViewController(viewModel: viewModel)
         navigationController.pushViewController(imageDetailViewController, animated: true)
     }

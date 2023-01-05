@@ -69,7 +69,7 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
             strongSelf.imageDownloaded.accept((index, image))
             
             var pictures = strongSelf.images.value
-            pictures[index].image = image
+            pictures[index].imageCache[.normal] = image
             strongSelf.images.accept(pictures)
         }
     }

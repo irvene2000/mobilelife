@@ -44,7 +44,7 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     private let normalKey = "Normal"
     private let blurredKey = "Blur"
     private let grayscaleKey = "GrayScale"
-    private var imageCache = [String: UIImage]()
+    private var selectedVariant: PictureVariant = .normal
     
     init(selectedPictureIndex: Int, pictures: BehaviorRelay<[Picture]>) {
         self.selectedPictureIndex = selectedPictureIndex
@@ -80,12 +80,12 @@ class ImageDetailViewModel: ImageDetailViewModelType {
         downloadURLViewModel.valueRelay.accept(picture.url.value?.absoluteString ?? "")
         downloadURLRelay = BehaviorRelay(value: downloadURLViewModel)
         
-        picturesRelay?.subscribe { [weak self] pictures in
+        picturesRelay?.subscribe(onNext: { [weak self] pictures in
             guard let strongSelf = self else { return }
             let picture = pictures[strongSelf.selectedPictureIndex]
-            strongSelf.imageRelay.accept(picture.image)
-            strongSelf.imageCache[strongSelf.normalKey] = picture.image
-        }.disposed(by: disposeBag)
+            let image = picture.imageCache[strongSelf.selectedVariant]
+            strongSelf.imageRelay.accept(image)
+        }).disposed(by: disposeBag)
     }
     
     // MARK: - Internal API -
@@ -98,15 +98,18 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     // MARK: ImageDetailViewModel Actions
     
     func toggleNormalImage() {
+        selectedVariant = .normal
         retrieveImage(key: normalKey)
     }
     
     func toggleBlurredImage(blurIndex: Int) {
+        selectedVariant = .blur(index: blurIndex)
         let blurIndexKey = "\(blurredKey)-\(blurIndex)"
         retrieveImage(key: blurIndexKey)
     }
     
     func toggleGrayscaleImage() {
+        selectedVariant = .grayscale
         retrieveImage(key: grayscaleKey)
     }
     
@@ -115,13 +118,9 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     
     private func retrieveImage(key: String){
         if let picture = picturesRelay?.value[selectedPictureIndex] {
-            
-        }
-        else if let cachedImage = imageCache[key] {
-//            imageRelay?.accept(cachedImage)
+            imageRelay.accept(picture.imageCache[selectedVariant])
         }
         else {
-//            imageRelay?.accept(nil)
         }
     }
 }

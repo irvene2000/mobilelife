@@ -38,7 +38,7 @@ class ImageCollectionViewController: UIViewController {
         
         setupViews()
         
-        viewModel.imageViewModels.subscribe { [weak self] pictures in
+        viewModel.imageViewModelsRelay.subscribe { [weak self] pictures in
             guard let strongSelf = self else { return }
             
             let picturesCount = min(2, pictures.count)
@@ -71,18 +71,18 @@ extension ImageCollectionViewController: UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.imageViewModels.value.count
+        return viewModel.imageViewModelsRelay.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
-        cell.viewModel = viewModel.imageViewModels.value[indexPath.row]
+        cell.viewModel = viewModel.imageViewModelsRelay.value[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let index = indexPath.row
-        let size = viewModel.imageViewModels.value[index].actualSize.value
+        let size = viewModel.imageViewModelsRelay.value[index].actualSizeRelay.value
         return size.fittingInScreen(scale: 1)
     }
     
@@ -106,6 +106,6 @@ extension ImageCollectionViewController: UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Coordinator.navigateToImageDetail(selectedPictureIndex: indexPath.row, pictures: viewModel.images)
+        Coordinator.navigateToImageDetail(selectedPictureIndex: indexPath.row, pictures: viewModel.picturesRelay)
     }
 }

@@ -11,9 +11,9 @@ import RxAlamofire
 import RxCocoa
 
 protocol ImageCollectionViewModelType {
-    var imageDownloaded: PublishRelay<(Int, UIImage)> { get }
-    var imageViewModels: BehaviorRelay<[ImageCollectionViewCellViewModelType]> { get }
-    var images: BehaviorRelay<[Picture]> { get }
+    var imageDownloadedRelay: PublishRelay<(Int, UIImage)> { get }
+    var imageViewModelsRelay: BehaviorRelay<[ImageCollectionViewCellViewModelType]> { get }
+    var picturesRelay: BehaviorRelay<[Picture]> { get }
     
     func downloadImage(at index: Int, scale: CGFloat)
     func retrieveNextSetOfImages()
@@ -23,9 +23,9 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     // MARK: - Properties -
     // MARK: Internal
     
-    var imageDownloaded = PublishRelay<(Int, UIImage)>()
-    var imageViewModels: BehaviorRelay<[ImageCollectionViewCellViewModelType]> = BehaviorRelay(value: [])
-    var images: BehaviorRelay<[Picture]> = BehaviorRelay(value: [])
+    var imageDownloadedRelay = PublishRelay<(Int, UIImage)>()
+    var imageViewModelsRelay: BehaviorRelay<[ImageCollectionViewCellViewModelType]> = BehaviorRelay(value: [])
+    var picturesRelay: BehaviorRelay<[Picture]> = BehaviorRelay(value: [])
     
     // MARK: Private
     
@@ -48,25 +48,25 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     // MARK: - Internal API -
     
     func downloadImage(at index: Int, scale: CGFloat) {
-        guard index < images.value.count else { return }
+        guard index < picturesRelay.value.count else { return }
         
-        let picture = images.value[index]
+        let picture = picturesRelay.value[index]
         let cachedImage = picture.imageCache[.normal]
         
         guard cachedImage == nil else {
-            imageDownloaded.accept((index, cachedImage!))
+            imageDownloadedRelay.accept((index, cachedImage!))
             return
         }
         
         let imageSizeFittingInScreen = picture.imageSizeFittingInScreen(scale: scale)
         api.downloadImage(id: picture.id, size: imageSizeFittingInScreen, variant: .normal).subscribe(onSuccess: { [weak self] image in
             guard let strongSelf = self else { return }
-            strongSelf.imageViewModels.value[index].image.accept(image)
-            strongSelf.imageDownloaded.accept((index, image))
+            strongSelf.imageViewModelsRelay.value[index].imageRelay.accept(image)
+            strongSelf.imageDownloadedRelay.accept((index, image))
 
-            var pictures = strongSelf.images.value
+            var pictures = strongSelf.picturesRelay.value
             pictures[index].imageCache[.normal] = image
-            strongSelf.images.accept(pictures)
+            strongSelf.picturesRelay.accept(pictures)
         }).disposed(by: disposeBag)
     }
     
@@ -77,7 +77,7 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
         
         api.retrieveImages(page: pageCount).subscribe { [weak self] pictures in
                 guard let strongSelf = self else { return }
-            var imageList = strongSelf.images.value
+            var imageList = strongSelf.picturesRelay.value
             imageList.append(contentsOf: pictures)
             strongSelf.processPictures(pictures: imageList)
             strongSelf.pageCount += 1
@@ -91,17 +91,17 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     // MARK: - Private API -
     
     private func processPictures(pictures: [Picture]) {
-        images.accept(pictures)
+        picturesRelay.accept(pictures)
         
         let newImageViewModels = pictures.map { picture in
             let imageViewModel = ImageCollectionViewCellViewModel()
-            imageViewModel.actualSize.accept(CGSize(width: picture.width, height: picture.height))
+            imageViewModel.actualSizeRelay.accept(CGSize(width: picture.width, height: picture.height))
             return imageViewModel
         }
 
-        var imageList = imageViewModels.value
+        var imageList = imageViewModelsRelay.value
         imageList.append(contentsOf: newImageViewModels)
-        imageViewModels.accept(imageList)
+        imageViewModelsRelay.accept(imageList)
     }
 }
 

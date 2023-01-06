@@ -67,7 +67,7 @@ class SegmentedControlTableViewCell: UITableViewCell {
     }
     
     private func setupListeners() {
-        viewModel.segments.subscribe { [weak self] actions in
+        viewModel.segmentsRelay.subscribe { [weak self] actions in
             guard let strongSelf = self else { return }
             strongSelf.segmentedControl.removeAllSegments()
             
@@ -76,7 +76,7 @@ class SegmentedControlTableViewCell: UITableViewCell {
             }
         }.disposed(by: disposeBag)
         
-        viewModel.selectedSegmentIndex.subscribe(onNext: { [weak self] index in
+        viewModel.selectedSegmentIndexRelay.subscribe(onNext: { [weak self] index in
             guard let strongSelf = self else { return }
             strongSelf.segmentedControl.selectedSegmentIndex = index ?? 0
         }).disposed(by: disposeBag)
@@ -84,11 +84,11 @@ class SegmentedControlTableViewCell: UITableViewCell {
 }
 
 protocol SegmentedControlTableViewCellViewModelType {
-    var segments: BehaviorRelay<[UIAction]> { get }
-    var selectedSegmentIndex: BehaviorRelay<Int?> { get }
+    var segmentsRelay: BehaviorRelay<[UIAction]> { get }
+    var selectedSegmentIndexRelay: BehaviorRelay<Int?> { get }
 }
 
 class SegmentedControlTableViewCellViewModel: SegmentedControlTableViewCellViewModelType {
-    var segments: BehaviorRelay<[UIAction]> = BehaviorRelay(value: [])
-    var selectedSegmentIndex: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
+    var segmentsRelay: BehaviorRelay<[UIAction]> = BehaviorRelay(value: [])
+    var selectedSegmentIndexRelay: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
 }

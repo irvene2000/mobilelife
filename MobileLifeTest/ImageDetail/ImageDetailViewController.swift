@@ -119,8 +119,8 @@ extension ImageDetailViewController: UITableViewDelegate, UITableViewDataSource 
                         self.viewModel.toggleGrayscaleImage()
                     })
                 ]
-                viewModel.segmentsRelay.value.segments.accept(actions)
-                viewModel.segmentsRelay.value.selectedSegmentIndex.accept(0)
+                viewModel.segmentsRelay.value.segmentsRelay.accept(actions)
+                viewModel.segmentsRelay.value.selectedSegmentIndexRelay.accept(0)
                 cell = newCell
             case 1:
                 let newCell = tableView.dequeueReusableCell(withIdentifier: "SliderTableViewCell", for: indexPath) as! SliderTableViewCell

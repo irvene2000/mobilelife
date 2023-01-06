@@ -31,7 +31,7 @@ final class ImageCollectionViewModelTests: XCTestCase {
         
         waitForExpectations(timeout: 3.0)
         
-        XCTAssertEqual(subject.images.value.count, 0)
+        XCTAssertEqual(subject.picturesRelay.value.count, 0)
     }
     
     func testImageReturnSingle() {
@@ -45,7 +45,7 @@ final class ImageCollectionViewModelTests: XCTestCase {
         
         waitForExpectations(timeout: 3.0)
         
-        XCTAssertEqual(subject.images.value.count, 1)
+        XCTAssertEqual(subject.picturesRelay.value.count, 1)
     }
     
     func testImageReturnMultiple() {
@@ -59,6 +59,6 @@ final class ImageCollectionViewModelTests: XCTestCase {
         
         waitForExpectations(timeout: 3.0)
         
-        XCTAssertGreaterThan(subject.images.value.count, 1)
+        XCTAssertGreaterThan(subject.picturesRelay.value.count, 1)
     }
 }

@@ -46,7 +46,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     private func rebindViewModel() {
-        viewModel?.image.subscribe(onNext: { [weak self] image in
+        viewModel?.imageRelay.subscribe(onNext: { [weak self] image in
             guard let strongSelf = self else { return }
             strongSelf.imageView.image = image
         }).disposed(by: disposeBag)
@@ -70,11 +70,11 @@ class ImageCollectionViewCell: UICollectionViewCell {
 }
 
 protocol ImageCollectionViewCellViewModelType {
-    var image: BehaviorRelay<UIImage?> { get }
-    var actualSize: BehaviorRelay<CGSize> { get }
+    var imageRelay: BehaviorRelay<UIImage?> { get }
+    var actualSizeRelay: BehaviorRelay<CGSize> { get }
 }
 
 struct ImageCollectionViewCellViewModel: ImageCollectionViewCellViewModelType {
-    var image: BehaviorRelay<UIImage?> = BehaviorRelay(value: nil)
-    var actualSize: BehaviorRelay<CGSize> = BehaviorRelay(value: .zero)
+    var imageRelay: BehaviorRelay<UIImage?> = BehaviorRelay(value: nil)
+    var actualSizeRelay: BehaviorRelay<CGSize> = BehaviorRelay(value: .zero)
 }

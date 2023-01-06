@@ -66,14 +66,14 @@ class SegmentedControlTableViewCell: UITableViewCell {
     }
     
     private func setupListeners() {
-        viewModel.segmentsRelay.subscribe { [weak self] actions in
+        viewModel.segmentsRelay.subscribe(onNext: { [weak self] actions in
             guard let strongSelf = self else { return }
             strongSelf.segmentedControl.removeAllSegments()
             
             for (index, action) in actions.enumerated() {
                 strongSelf.segmentedControl.insertSegment(action: action, at: index, animated: false)
             }
-        }.disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         
         viewModel.selectedSegmentIndexRelay.subscribe(onNext: { [weak self] index in
             guard let strongSelf = self else { return }

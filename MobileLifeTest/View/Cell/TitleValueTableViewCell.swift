@@ -80,14 +80,14 @@ class TitleValueTableViewCell: UITableViewCell {
     private func setupListeners() {
         guard let viewModel = viewModel else { return }
         
-        viewModel.titleRelay.subscribe { [weak self] title in
+        viewModel.titleRelay.subscribe(onNext: { [weak self] title in
             guard let strongSelf = self else { return }
             strongSelf.titleLabel.text = title
-        }.disposed(by: disposeBag)
-        viewModel.valueRelay.subscribe { [weak self] value in
+        }).disposed(by: disposeBag)
+        viewModel.valueRelay.subscribe(onNext: { [weak self] value in
             guard let strongSelf = self else { return }
             strongSelf.valueLabel.text = value
-        }.disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
     }
 }
 

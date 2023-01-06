@@ -14,6 +14,7 @@ protocol ImageCollectionViewModelType {
     var imageDownloadedRelay: PublishRelay<(Int, UIImage)> { get }
     var imageViewModelsRelay: BehaviorRelay<[ImageCollectionViewCellViewModelType]> { get }
     var picturesRelay: BehaviorRelay<[Picture]> { get }
+    var failedToLoadImageRelay: PublishRelay<Void> { get }
     
     func downloadImage(at index: Int, scale: CGFloat)
     func retrieveNextSetOfImages()
@@ -26,6 +27,7 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     var imageDownloadedRelay = PublishRelay<(Int, UIImage)>()
     var imageViewModelsRelay: BehaviorRelay<[ImageCollectionViewCellViewModelType]> = BehaviorRelay(value: [])
     var picturesRelay: BehaviorRelay<[Picture]> = BehaviorRelay(value: [])
+    var failedToLoadImageRelay = PublishRelay<Void>()
     
     // MARK: Private
     
@@ -75,17 +77,18 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
         
         isLoadingImages = true
         
-        api.retrieveImages(page: pageCount).subscribe { [weak self] pictures in
+        api.retrieveImages(page: pageCount).subscribe(onSuccess: { [weak self] pictures in
                 guard let strongSelf = self else { return }
             var imageList = strongSelf.picturesRelay.value
             imageList.append(contentsOf: pictures)
             strongSelf.processPictures(pictures: imageList)
             strongSelf.pageCount += 1
             strongSelf.isLoadingImages = false
-        } onFailure: { [weak self] error in
+        }, onFailure: { [weak self] error in
             guard let strongSelf = self else { return }
             strongSelf.isLoadingImages = false
-        }.disposed(by: disposeBag)
+            strongSelf.failedToLoadImageRelay.accept(())
+        }).disposed(by: disposeBag)
     }
     
     // MARK: - Private API -

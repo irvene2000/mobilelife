@@ -38,17 +38,7 @@ class ImageCollectionViewController: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-        
-        viewModel.imageViewModelsRelay.subscribe { [weak self] pictures in
-            guard let strongSelf = self else { return }
-            
-            let picturesCount = min(2, pictures.count)
-            for i in 0 ..< picturesCount {
-                strongSelf.viewModel.downloadImage(at: i, scale: strongSelf.imageScale)
-            }
-            
-            strongSelf.rootView.collectionView.reloadData()
-        }.disposed(by: disposeBag)
+        setupListeners()
     }
     
     deinit {
@@ -63,6 +53,28 @@ class ImageCollectionViewController: UIViewController {
         rootView.collectionView.delegate = self
         rootView.collectionView.dataSource = self
     }
+    
+    private func setupListeners() {
+        viewModel.imageViewModelsRelay.subscribe(onNext: { [weak self] pictures in
+            guard let strongSelf = self else { return }
+            
+            let picturesCount = min(2, pictures.count)
+            for i in 0 ..< picturesCount {
+                strongSelf.viewModel.downloadImage(at: i, scale: strongSelf.imageScale)
+            }
+            
+            strongSelf.rootView.collectionView.reloadData()
+        }).disposed(by: disposeBag)
+        viewModel.failedToLoadImageRelay.subscribe(onNext: { [weak self] in
+            guard let strongSelf = self else { return }
+            let alertController = UIAlertController(title: "Failed to load", message: "Click retry to attempt again.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in
+                strongSelf.viewModel.retrieveNextSetOfImages()
+            }))
+            strongSelf.present(alertController, animated: true)
+        }).disposed(by: disposeBag)
+    }
+    
 }
 
 extension ImageCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {

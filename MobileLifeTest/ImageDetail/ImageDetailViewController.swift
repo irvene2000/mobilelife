@@ -46,10 +46,10 @@ class ImageDetailViewController: UIViewController {
         
         rootView.configureView(for: traitCollection.verticalSizeClass)
         
-        viewModel.imageRelay.subscribe { [weak self] image in
+        viewModel.imageRelay.subscribe(onNext: { [weak self] image in
             guard let strongSelf = self else { return }
             strongSelf.rootView.imageView.image = image
-        }.disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
         viewModel.sliderRelay.subscribe(onNext: { [weak self] viewModel in
             guard let strongSelf = self else { return }
             strongSelf.rootView.infoTableView.beginUpdates()

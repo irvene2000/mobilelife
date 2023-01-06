@@ -1,6 +1,0 @@
-module Pods_MobileLifeTest {
-  umbrella header "Pods-MobileLifeTest-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -1,0 +1,6 @@
+framework module Pods_MobileLife_Tests_MobileLifeTest {
+  umbrella header "Pods-MobileLife Tests-MobileLifeTest-umbrella.h"
+
+  export *
+  module * { export * }
+}

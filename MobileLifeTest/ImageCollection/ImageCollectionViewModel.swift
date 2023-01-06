@@ -30,13 +30,14 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
     // MARK: Private
     
     private var disposeBag: DisposeBag! = DisposeBag()
-    private var api: APIType.Type = API.self
+    private var api: APIType.Type
     private var pageCount: Int = 1
     private var isLoadingImages: Bool = false
     
     // MARK: - Initializer -
     
-    init() {
+    init(api: APIType.Type = API.self) {
+        self.api = api
         retrieveNextSetOfImages()
     }
     
@@ -58,16 +59,15 @@ class ImageCollectionViewModel: ImageCollectionViewModelType {
         }
         
         let imageSizeFittingInScreen = picture.imageSizeFittingInScreen(scale: scale)
-        
-        api.downloadImage(id: picture.id, size: CGSize(width: imageSizeFittingInScreen.width, height: imageSizeFittingInScreen.height), variant: .normal) { [weak self] image in
+        api.downloadImage(id: picture.id, size: imageSizeFittingInScreen, variant: .normal).subscribe(onSuccess: { [weak self] image in
             guard let strongSelf = self else { return }
             strongSelf.imageViewModels.value[index].image.accept(image)
             strongSelf.imageDownloaded.accept((index, image))
-            
+
             var pictures = strongSelf.images.value
             pictures[index].imageCache[.normal] = image
             strongSelf.images.accept(pictures)
-        }
+        }).disposed(by: disposeBag)
     }
     
     func retrieveNextSetOfImages() {

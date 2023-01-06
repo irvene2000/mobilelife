@@ -20,6 +20,7 @@ class ImageDetailViewController: UIViewController {
     }
     private var viewModel: ImageDetailViewModelType
     private var disposeBag: DisposeBag! = DisposeBag()
+    private var isDisplayingSlider: Bool = false
     
     // MARK: - Initializer -
     
@@ -49,10 +50,26 @@ class ImageDetailViewController: UIViewController {
             guard let strongSelf = self else { return }
             strongSelf.rootView.imageView.image = image
         }.disposed(by: disposeBag)
+        viewModel.sliderRelay.subscribe(onNext: { [weak self] viewModel in
+            guard let strongSelf = self else { return }
+            strongSelf.rootView.infoTableView.beginUpdates()
+        
+            if viewModel != nil && !strongSelf.isDisplayingSlider {
+                strongSelf.isDisplayingSlider.toggle()
+                strongSelf.rootView.infoTableView.insertRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+            }
+            else if viewModel == nil && strongSelf.isDisplayingSlider {
+                strongSelf.isDisplayingSlider.toggle()
+                strongSelf.rootView.infoTableView.deleteRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+            }
+            
+            strongSelf.rootView.infoTableView.endUpdates()
+        }).disposed(by: disposeBag)
         
         rootView.infoTableView.delegate = self
         rootView.infoTableView.dataSource = self
         rootView.infoTableView.register(TitleValueTableViewCell.self, forCellReuseIdentifier: "TitleValueTableViewCell")
+        rootView.infoTableView.register(SliderTableViewCell.self, forCellReuseIdentifier: "SliderTableViewCell")
         rootView.infoTableView.register(SegmentedControlTableViewCell.self, forCellReuseIdentifier: "SegmentedControlTableViewCell")
     }
     
@@ -74,7 +91,7 @@ extension ImageDetailViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1
+            return viewModel.sliderRelay.value != nil ? 2 : 1
         case 1:
             return 5
         default:
@@ -87,22 +104,31 @@ extension ImageDetailViewController: UITableViewDelegate, UITableViewDataSource 
         
         switch indexPath.section {
         case 0:
-            let newCell = tableView.dequeueReusableCell(withIdentifier: "SegmentedControlTableViewCell", for: indexPath) as! SegmentedControlTableViewCell
-            newCell.viewModel = viewModel.segmentsRelay.value
-            let actions = [
-                UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Normal", comment: "Normal Segment"), handler: { action in
-                    self.viewModel.toggleNormalImage()
-                }),
-                UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Blur", comment: "Blur Segment"), handler: { action in
-                    self.viewModel.toggleBlurredImage(blurIndex: 5)
-                }),
-                UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Grayscale", comment: "Grayscale Segment"), handler: { action in
-                    self.viewModel.toggleGrayscaleImage()
-                })
-            ]
-            viewModel.segmentsRelay.value.segments.accept(actions)
-            viewModel.segmentsRelay.value.selectedSegmentIndex.accept(0)
-            cell = newCell
+            switch indexPath.row {
+            case 0:
+                let newCell = tableView.dequeueReusableCell(withIdentifier: "SegmentedControlTableViewCell", for: indexPath) as! SegmentedControlTableViewCell
+                newCell.viewModel = viewModel.segmentsRelay.value
+                let actions = [
+                    UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Normal", comment: "Normal Segment"), handler: { action in
+                        self.viewModel.toggleNormalImage()
+                    }),
+                    UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Blur", comment: "Blur Segment"), handler: { action in
+                        self.viewModel.toggleBlurredImage()
+                    }),
+                    UIAction(title: NSLocalizedString("ImageDetailViewController.SegmentTitle.Grayscale", comment: "Grayscale Segment"), handler: { action in
+                        self.viewModel.toggleGrayscaleImage()
+                    })
+                ]
+                viewModel.segmentsRelay.value.segments.accept(actions)
+                viewModel.segmentsRelay.value.selectedSegmentIndex.accept(0)
+                cell = newCell
+            case 1:
+                let newCell = tableView.dequeueReusableCell(withIdentifier: "SliderTableViewCell", for: indexPath) as! SliderTableViewCell
+                newCell.viewModel = viewModel.sliderRelay.value
+                cell = newCell
+            default:
+                break
+            }
         case 1:
             let newCell = tableView.dequeueReusableCell(withIdentifier: "TitleValueTableViewCell", for: indexPath) as! TitleValueTableViewCell
             switch indexPath.row {
@@ -127,3 +153,4 @@ extension ImageDetailViewController: UITableViewDelegate, UITableViewDataSource 
         return cell
     }
 }
+

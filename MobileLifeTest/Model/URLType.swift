@@ -10,6 +10,10 @@ import Foundation
 public struct URLType: Codable {
     public let value: URL?
     
+    public init(value: URL?) {
+        self.value = value
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         // attempt to decode from all JSON primitives

@@ -8,13 +8,17 @@
 import Foundation
 import SwiftyJSON
 
-enum PictureVariant: Hashable, Codable {
+public enum PictureVariant: Hashable, Identifiable {
+    public var id: Self {
+        return self
+    }
+    
     case normal
     case blur(index: Int)
     case grayscale
 }
 
-struct Picture: Codable {
+public struct Picture: Codable {
     var author: String
     var downloadURL: URLType
     var height: Int
@@ -23,7 +27,17 @@ struct Picture: Codable {
     var width: Int
     var imageCache: [PictureVariant: UIImage]
     
-    init(from decoder: Decoder) throws {
+    public init(author: String, downloadURL: URLType, height: Int, id: String, url: URLType, width: Int, imageCache: [PictureVariant: UIImage]) {
+        self.author = author
+        self.downloadURL = downloadURL
+        self.height = height
+        self.id = id
+        self.url = url
+        self.width = width
+        self.imageCache = imageCache
+    }
+    
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.author = try container.decode(String.self, forKey: .author)
         self.downloadURL = try container.decode(URLType.self, forKey: .downloadURL)
@@ -34,7 +48,7 @@ struct Picture: Codable {
         self.imageCache = [:]
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.author, forKey: .author)
         try container.encode(self.downloadURL, forKey: .downloadURL)

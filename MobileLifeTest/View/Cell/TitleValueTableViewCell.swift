@@ -70,7 +70,7 @@ class TitleValueTableViewCell: UITableViewCell {
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20.0),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20.0),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.widthAnchor.constraint(equalToConstant: 100.0),
+            titleLabel.widthAnchor.constraint(equalToConstant: 80.0),
             
             valueLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20.0),
             valueLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 20.0),

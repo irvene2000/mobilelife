@@ -12,6 +12,7 @@ import RxCocoa
 protocol ImageDetailViewModelType {
     var imageRelay: BehaviorRelay<UIImage?> { get }
     var segmentsRelay: BehaviorRelay<SegmentedControlTableViewCellViewModelType> { get }
+    var sliderRelay: BehaviorRelay<SliderTableViewCellViewModelType?> { get }
     var authorRelay: BehaviorRelay<TitleValueTableViewCellViewModelType> { get }
     var dimensionRelay: BehaviorRelay<TitleValueTableViewCellViewModelType> { get }
     var identifierRelay: BehaviorRelay<TitleValueTableViewCellViewModelType> { get }
@@ -19,7 +20,7 @@ protocol ImageDetailViewModelType {
     var downloadURLRelay: BehaviorRelay<TitleValueTableViewCellViewModelType> { get }
     
     func toggleNormalImage()
-    func toggleBlurredImage(blurIndex: Int)
+    func toggleBlurredImage()
     func toggleGrayscaleImage()
 }
 
@@ -30,6 +31,7 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     
     var imageRelay: BehaviorRelay<UIImage?> = BehaviorRelay(value: nil)
     var segmentsRelay: BehaviorRelay<SegmentedControlTableViewCellViewModelType>
+    var sliderRelay = BehaviorRelay<SliderTableViewCellViewModelType?>(value: nil)
     var authorRelay: BehaviorRelay<TitleValueTableViewCellViewModelType>
     var dimensionRelay: BehaviorRelay<TitleValueTableViewCellViewModelType>
     var identifierRelay: BehaviorRelay<TitleValueTableViewCellViewModelType>
@@ -42,6 +44,7 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     private let selectedPictureIndex: Int
     private weak var picturesRelay: BehaviorRelay<[Picture]>?
     private var disposeBag: DisposeBag! = DisposeBag()
+    private var sliderDisposeBag: DisposeBag! = DisposeBag()
     private let normalKey = "Normal"
     private let blurredKey = "Blur"
     private let grayscaleKey = "GrayScale"
@@ -99,16 +102,26 @@ class ImageDetailViewModel: ImageDetailViewModelType {
     // MARK: ImageDetailViewModel Actions
     
     func toggleNormalImage() {
+        sliderRelay.accept(nil)
         selectedVariant = .normal
         retrieveImage(variant: .normal)
     }
     
-    func toggleBlurredImage(blurIndex: Int) {
-        selectedVariant = .blur(index: blurIndex)
-        retrieveImage(variant: .blur(index: blurIndex))
+    func toggleBlurredImage() {
+        sliderDisposeBag = DisposeBag()
+        let newViewModel = SliderTableViewCellViewModel()
+        newViewModel.minTitleRelay.accept(1)
+        newViewModel.maxTitleRelay.accept(10)
+        newViewModel.sliderValueRelay.subscribe(onNext: { [weak self] sliderValue in
+            guard let strongSelf = self else { return }
+            strongSelf.retrieveImage(variant: .blur(index: sliderValue))
+        }).disposed(by: sliderDisposeBag)
+        
+        sliderRelay.accept(newViewModel)
     }
     
     func toggleGrayscaleImage() {
+        sliderRelay.accept(nil)
         selectedVariant = .grayscale
         retrieveImage(variant: .grayscale)
     }
@@ -122,18 +135,18 @@ class ImageDetailViewModel: ImageDetailViewModelType {
         
         var picture = pictures[selectedPictureIndex]
         
-        if let cachedImage = picture.imageCache[selectedVariant] {
+        if let cachedImage = picture.imageCache[variant] {
             imageRelay.accept(cachedImage)
         }
         else {
             imageRelay.accept(nil)
-            api.downloadImage(id: picture.id, size: picture.imageSizeFittingInScreen(), variant: variant) { [weak self] image in
+            api.downloadImage(id: picture.id, size: picture.imageSizeFittingInScreen(), variant: variant).subscribe(onSuccess: { [weak self] image in
                 guard let strongSelf = self else { return }
                 picture.imageCache[variant] = image
                 pictures[strongSelf.selectedPictureIndex] = picture
                 strongSelf.picturesRelay?.accept(pictures)
                 strongSelf.retrieveImage(variant: variant)
-            }
+            }).disposed(by: disposeBag)
         }
     }
 }

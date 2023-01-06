@@ -10,9 +10,9 @@ import RxAlamofire
 import RxSwift
 import SwiftyJSON
 
-protocol APIType {
+public protocol APIType {
     static func retrieveImages(page: Int) -> Single<[Picture]>
-    static func downloadImage(id: String, size: CGSize, variant: PictureVariant, completion: @escaping ((UIImage) -> Void))
+    static func downloadImage(id: String, size: CGSize, variant: PictureVariant) -> Single<UIImage>
 }
 
 enum API: APIType {
@@ -28,29 +28,37 @@ enum API: APIType {
             .asSingle()
     }
     
-    static func downloadImage(id: String, size: CGSize, variant: PictureVariant = .normal, completion: @escaping ((UIImage) -> Void)) {
-        var thumbnailURLString = "https://picsum.photos/id/\(id)/\(Int(size.width))/\(Int(size.height))"
-        
-        switch variant {
-        case let .blur(index):
-            thumbnailURLString.append("/?blur=\(index)")
-        case .grayscale:
-            thumbnailURLString.append("/?grayscale")
-        default:
-            break
-        }
-        
-        guard let url = URL(string: thumbnailURLString) else { return }
-        
-        DispatchQueue.global().async {
-            guard let data = try? Data(contentsOf: url) else { return }
-           
-            guard let image = UIImage(data: data) else { return }
+    static func downloadImage(id: String, size: CGSize, variant: PictureVariant) -> Single<UIImage> {
+        let single = Single.create { single in
+            let disposable = Disposables.create()
             
-            DispatchQueue.main.async {
-                completion(image)
+            var thumbnailURLString = "https://picsum.photos/id/\(id)/\(Int(size.width))/\(Int(size.height))"
+            
+            switch variant {
+            case let .blur(index):
+                thumbnailURLString.append("/?blur=\(index)")
+            case .grayscale:
+                thumbnailURLString.append("/?grayscale")
+            default:
+                break
             }
+            
+            guard let url = URL(string: thumbnailURLString) else { return disposable }
+            
+            DispatchQueue.global().async {
+                guard let data = try? Data(contentsOf: url) else { return }
+               
+                guard let image = UIImage(data: data) else { return }
+                
+                DispatchQueue.main.async {
+                    single(.success(image))
+                }
+            }
+            
+            return disposable
         }
+        
+        return single
     }
 }
 

@@ -15,11 +15,9 @@
 		0168CCA2295DA07600B093CE /* MobileLifeTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0168CCA0295DA07600B093CE /* MobileLifeTest.xcdatamodeld */; };
 		0168CCA4295DA07600B093CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0168CCA3295DA07600B093CE /* Assets.xcassets */; };
 		0168CCA7295DA07700B093CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0168CCA5295DA07600B093CE /* LaunchScreen.storyboard */; };
-		0168CCB2295DA07700B093CE /* MobileLifeTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168CCB1295DA07700B093CE /* MobileLifeTestTests.swift */; };
-		0168CCBC295DA07700B093CE /* MobileLifeTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168CCBB295DA07700B093CE /* MobileLifeTestUITests.swift */; };
-		0168CCBE295DA07700B093CE /* MobileLifeTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168CCBD295DA07700B093CE /* MobileLifeTestUITestsLaunchTests.swift */; };
 		0168CCCE295DA47800B093CE /* ImageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168CCCD295DA47800B093CE /* ImageCollectionView.swift */; };
 		0168CCD1295DA85C00B093CE /* ImageCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0168CCD0295DA85C00B093CE /* ImageCollectionViewModel.swift */; };
+		016A42DD296697AB004F131D /* SliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016A42DC296697AB004F131D /* SliderTableViewCell.swift */; };
 		019F8D72295DB2D400685589 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D71295DB2D400685589 /* API.swift */; };
 		019F8D77295DB45900685589 /* URLType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D76295DB45900685589 /* URLType.swift */; };
 		019F8D7F295DC4CA00685589 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D7E295DC4CA00685589 /* ImageCollectionViewCell.swift */; };
@@ -31,18 +29,14 @@
 		019F8D9029654E6000685589 /* ImageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D8F29654E6000685589 /* ImageDetailView.swift */; };
 		019F8D92296564A000685589 /* TitleValueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019F8D91296564A000685589 /* TitleValueTableViewCell.swift */; };
 		019F8D9529665EED00685589 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 019F8D9729665EED00685589 /* Localizable.strings */; };
-		466DBCBBF50A0A1C3C7321D3 /* libPods-MobileLifeTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3B407EEA02BE28DCD9DAD16 /* libPods-MobileLifeTest.a */; };
+		01B640172967BAE90076C757 /* ImageCollectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B640162967BAE90076C757 /* ImageCollectionViewModelTests.swift */; };
+		01B6401A2967BB4E0076C757 /* MockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B640192967BB4E0076C757 /* MockAPI.swift */; };
+		2543220A99773296A779C4E1 /* Pods_MobileLife_Tests_MobileLifeTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76622B2DE84F7B9DA6A5DF91 /* Pods_MobileLife_Tests_MobileLifeTest.framework */; };
+		C8CFABC8BCFBC9AC95B9BBC4 /* Pods_MobileLife_Tests_MobileLifeTestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDF755A27A7308B553FB0CB9 /* Pods_MobileLife_Tests_MobileLifeTestTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		0168CCAE295DA07700B093CE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0168CC8C295DA07600B093CE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0168CC93295DA07600B093CE;
-			remoteInfo = MobileLifeTest;
-		};
-		0168CCB8295DA07700B093CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0168CC8C295DA07600B093CE /* Project object */;
 			proxyType = 1;
@@ -63,12 +57,9 @@
 		0168CCA6295DA07700B093CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0168CCA8295DA07700B093CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0168CCAD295DA07700B093CE /* MobileLifeTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileLifeTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0168CCB1295DA07700B093CE /* MobileLifeTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLifeTestTests.swift; sourceTree = "<group>"; };
-		0168CCB7295DA07700B093CE /* MobileLifeTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileLifeTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0168CCBB295DA07700B093CE /* MobileLifeTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLifeTestUITests.swift; sourceTree = "<group>"; };
-		0168CCBD295DA07700B093CE /* MobileLifeTestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLifeTestUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0168CCCD295DA47800B093CE /* ImageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionView.swift; sourceTree = "<group>"; };
 		0168CCD0295DA85C00B093CE /* ImageCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewModel.swift; sourceTree = "<group>"; };
+		016A42DC296697AB004F131D /* SliderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTableViewCell.swift; sourceTree = "<group>"; };
 		019F8D71295DB2D400685589 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		019F8D76295DB45900685589 /* URLType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLType.swift; sourceTree = "<group>"; };
 		019F8D7E295DC4CA00685589 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -80,9 +71,18 @@
 		019F8D8F29654E6000685589 /* ImageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailView.swift; sourceTree = "<group>"; };
 		019F8D91296564A000685589 /* TitleValueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleValueTableViewCell.swift; sourceTree = "<group>"; };
 		019F8D9629665EED00685589 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		01B640162967BAE90076C757 /* ImageCollectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewModelTests.swift; sourceTree = "<group>"; };
+		01B640192967BB4E0076C757 /* MockAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPI.swift; sourceTree = "<group>"; };
+		0F1CCD9C3E4F1A70ACD6D974 /* Pods-MobileLifeTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLifeTestTests.release.xcconfig"; path = "Target Support Files/Pods-MobileLifeTestTests/Pods-MobileLifeTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		295AB571550CCF4F1C22C378 /* Pods-MobileLifeTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLifeTest.debug.xcconfig"; path = "Target Support Files/Pods-MobileLifeTest/Pods-MobileLifeTest.debug.xcconfig"; sourceTree = "<group>"; };
+		332578D8224203B010F4BE1A /* Pods-MobileLife Tests-MobileLifeTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLife Tests-MobileLifeTestTests.release.xcconfig"; path = "Target Support Files/Pods-MobileLife Tests-MobileLifeTestTests/Pods-MobileLife Tests-MobileLifeTestTests.release.xcconfig"; sourceTree = "<group>"; };
+		37AA58E728EE96EF7153BAE3 /* Pods-MobileLife Tests-MobileLifeTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLife Tests-MobileLifeTestTests.debug.xcconfig"; path = "Target Support Files/Pods-MobileLife Tests-MobileLifeTestTests/Pods-MobileLife Tests-MobileLifeTestTests.debug.xcconfig"; sourceTree = "<group>"; };
+		470DFE6E2272DA8424539E66 /* Pods-MobileLife Tests-MobileLifeTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLife Tests-MobileLifeTest.release.xcconfig"; path = "Target Support Files/Pods-MobileLife Tests-MobileLifeTest/Pods-MobileLife Tests-MobileLifeTest.release.xcconfig"; sourceTree = "<group>"; };
 		5240E93AEE3E03C4BEA884E4 /* Pods-MobileLifeTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLifeTest.release.xcconfig"; path = "Target Support Files/Pods-MobileLifeTest/Pods-MobileLifeTest.release.xcconfig"; sourceTree = "<group>"; };
-		D3B407EEA02BE28DCD9DAD16 /* libPods-MobileLifeTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MobileLifeTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		76622B2DE84F7B9DA6A5DF91 /* Pods_MobileLife_Tests_MobileLifeTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MobileLife_Tests_MobileLifeTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DCC5FC9D4CE583F9A10C328 /* Pods-MobileLifeTestTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLifeTestTests.debug.xcconfig"; path = "Target Support Files/Pods-MobileLifeTestTests/Pods-MobileLifeTestTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C3DE520D5791F8DC7C134B13 /* Pods-MobileLife Tests-MobileLifeTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MobileLife Tests-MobileLifeTest.debug.xcconfig"; path = "Target Support Files/Pods-MobileLife Tests-MobileLifeTest/Pods-MobileLife Tests-MobileLifeTest.debug.xcconfig"; sourceTree = "<group>"; };
+		EDF755A27A7308B553FB0CB9 /* Pods_MobileLife_Tests_MobileLifeTestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MobileLife_Tests_MobileLifeTestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				466DBCBBF50A0A1C3C7321D3 /* libPods-MobileLifeTest.a in Frameworks */,
+				2543220A99773296A779C4E1 /* Pods_MobileLife_Tests_MobileLifeTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,13 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0168CCB4295DA07700B093CE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				C8CFABC8BCFBC9AC95B9BBC4 /* Pods_MobileLife_Tests_MobileLifeTestTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +110,6 @@
 			children = (
 				0168CC96295DA07600B093CE /* MobileLifeTest */,
 				0168CCB0295DA07700B093CE /* MobileLifeTestTests */,
-				0168CCBA295DA07700B093CE /* MobileLifeTestUITests */,
 				0168CC95295DA07600B093CE /* Products */,
 				D1EE69D9CE40516BA3A2670D /* Pods */,
 				3ADCFAF79581F38D3C471006 /* Frameworks */,
@@ -128,7 +121,6 @@
 			children = (
 				0168CC94295DA07600B093CE /* MobileLifeTest.app */,
 				0168CCAD295DA07700B093CE /* MobileLifeTestTests.xctest */,
-				0168CCB7295DA07700B093CE /* MobileLifeTestUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,18 +149,10 @@
 		0168CCB0295DA07700B093CE /* MobileLifeTestTests */ = {
 			isa = PBXGroup;
 			children = (
-				0168CCB1295DA07700B093CE /* MobileLifeTestTests.swift */,
+				01B640182967BB3F0076C757 /* Mocks */,
+				01B640162967BAE90076C757 /* ImageCollectionViewModelTests.swift */,
 			);
 			path = MobileLifeTestTests;
-			sourceTree = "<group>";
-		};
-		0168CCBA295DA07700B093CE /* MobileLifeTestUITests */ = {
-			isa = PBXGroup;
-			children = (
-				0168CCBB295DA07700B093CE /* MobileLifeTestUITests.swift */,
-				0168CCBD295DA07700B093CE /* MobileLifeTestUITestsLaunchTests.swift */,
-			);
-			path = MobileLifeTestUITests;
 			sourceTree = "<group>";
 		};
 		019F8D70295DB2C200685589 /* Networking */ = {
@@ -213,6 +197,7 @@
 				019F8D7E295DC4CA00685589 /* ImageCollectionViewCell.swift */,
 				019F8D91296564A000685589 /* TitleValueTableViewCell.swift */,
 				014385BD2966698A00E754E9 /* SegmentedControlTableViewCell.swift */,
+				016A42DC296697AB004F131D /* SliderTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -251,10 +236,19 @@
 			path = ImageDetail;
 			sourceTree = "<group>";
 		};
+		01B640182967BB3F0076C757 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				01B640192967BB4E0076C757 /* MockAPI.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		3ADCFAF79581F38D3C471006 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D3B407EEA02BE28DCD9DAD16 /* libPods-MobileLifeTest.a */,
+				76622B2DE84F7B9DA6A5DF91 /* Pods_MobileLife_Tests_MobileLifeTest.framework */,
+				EDF755A27A7308B553FB0CB9 /* Pods_MobileLife_Tests_MobileLifeTestTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -264,6 +258,12 @@
 			children = (
 				295AB571550CCF4F1C22C378 /* Pods-MobileLifeTest.debug.xcconfig */,
 				5240E93AEE3E03C4BEA884E4 /* Pods-MobileLifeTest.release.xcconfig */,
+				8DCC5FC9D4CE583F9A10C328 /* Pods-MobileLifeTestTests.debug.xcconfig */,
+				0F1CCD9C3E4F1A70ACD6D974 /* Pods-MobileLifeTestTests.release.xcconfig */,
+				C3DE520D5791F8DC7C134B13 /* Pods-MobileLife Tests-MobileLifeTest.debug.xcconfig */,
+				470DFE6E2272DA8424539E66 /* Pods-MobileLife Tests-MobileLifeTest.release.xcconfig */,
+				37AA58E728EE96EF7153BAE3 /* Pods-MobileLife Tests-MobileLifeTestTests.debug.xcconfig */,
+				332578D8224203B010F4BE1A /* Pods-MobileLife Tests-MobileLifeTestTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -279,6 +279,7 @@
 				0168CC90295DA07600B093CE /* Sources */,
 				0168CC91295DA07600B093CE /* Frameworks */,
 				0168CC92295DA07600B093CE /* Resources */,
+				7D96B0353F2DA240B1B8AA2B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -293,9 +294,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0168CCC4295DA07700B093CE /* Build configuration list for PBXNativeTarget "MobileLifeTestTests" */;
 			buildPhases = (
+				D20AE3AC83EAE3BA5F880168 /* [CP] Check Pods Manifest.lock */,
 				0168CCA9295DA07700B093CE /* Sources */,
 				0168CCAA295DA07700B093CE /* Frameworks */,
 				0168CCAB295DA07700B093CE /* Resources */,
+				52479055875D36C1D42AA091 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -306,24 +309,6 @@
 			productName = MobileLifeTestTests;
 			productReference = 0168CCAD295DA07700B093CE /* MobileLifeTestTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		0168CCB6295DA07700B093CE /* MobileLifeTestUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0168CCC7295DA07700B093CE /* Build configuration list for PBXNativeTarget "MobileLifeTestUITests" */;
-			buildPhases = (
-				0168CCB3295DA07700B093CE /* Sources */,
-				0168CCB4295DA07700B093CE /* Frameworks */,
-				0168CCB5295DA07700B093CE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0168CCB9295DA07700B093CE /* PBXTargetDependency */,
-			);
-			name = MobileLifeTestUITests;
-			productName = MobileLifeTestUITests;
-			productReference = 0168CCB7295DA07700B093CE /* MobileLifeTestUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -339,10 +324,6 @@
 						CreatedOnToolsVersion = 14.1;
 					};
 					0168CCAC295DA07700B093CE = {
-						CreatedOnToolsVersion = 14.1;
-						TestTargetID = 0168CC93295DA07600B093CE;
-					};
-					0168CCB6295DA07700B093CE = {
 						CreatedOnToolsVersion = 14.1;
 						TestTargetID = 0168CC93295DA07600B093CE;
 					};
@@ -363,7 +344,6 @@
 			targets = (
 				0168CC93295DA07600B093CE /* MobileLifeTest */,
 				0168CCAC295DA07700B093CE /* MobileLifeTestTests */,
-				0168CCB6295DA07700B093CE /* MobileLifeTestUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -386,16 +366,43 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0168CCB5295DA07700B093CE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		52479055875D36C1D42AA091 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MobileLife Tests-MobileLifeTestTests/Pods-MobileLife Tests-MobileLifeTestTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MobileLife Tests-MobileLifeTestTests/Pods-MobileLife Tests-MobileLifeTestTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MobileLife Tests-MobileLifeTestTests/Pods-MobileLife Tests-MobileLifeTestTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D96B0353F2DA240B1B8AA2B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MobileLife Tests-MobileLifeTest/Pods-MobileLife Tests-MobileLifeTest-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MobileLife Tests-MobileLifeTest/Pods-MobileLife Tests-MobileLifeTest-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MobileLife Tests-MobileLifeTest/Pods-MobileLife Tests-MobileLifeTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		8978DE0D3AA4935FB8C2EADF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -411,7 +418,29 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MobileLifeTest-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MobileLife Tests-MobileLifeTest-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D20AE3AC83EAE3BA5F880168 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MobileLife Tests-MobileLifeTestTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -439,6 +468,7 @@
 				0168CC98295DA07600B093CE /* AppDelegate.swift in Sources */,
 				019F8D7F295DC4CA00685589 /* ImageCollectionViewCell.swift in Sources */,
 				019F8D8C2965471600685589 /* ImageDetailViewController.swift in Sources */,
+				016A42DD296697AB004F131D /* SliderTableViewCell.swift in Sources */,
 				019F8D83295DD12A00685589 /* SnappingCollectionViewFlowLayout.swift in Sources */,
 				0168CC9A295DA07600B093CE /* SceneDelegate.swift in Sources */,
 				014385C02966768200E754E9 /* Picture.swift in Sources */,
@@ -451,16 +481,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0168CCB2295DA07700B093CE /* MobileLifeTestTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0168CCB3295DA07700B093CE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0168CCBE295DA07700B093CE /* MobileLifeTestUITestsLaunchTests.swift in Sources */,
-				0168CCBC295DA07700B093CE /* MobileLifeTestUITests.swift in Sources */,
+				01B640172967BAE90076C757 /* ImageCollectionViewModelTests.swift in Sources */,
+				01B6401A2967BB4E0076C757 /* MockAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,11 +493,6 @@
 			isa = PBXTargetDependency;
 			target = 0168CC93295DA07600B093CE /* MobileLifeTest */;
 			targetProxy = 0168CCAE295DA07700B093CE /* PBXContainerItemProxy */;
-		};
-		0168CCB9295DA07700B093CE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0168CC93295DA07600B093CE /* MobileLifeTest */;
-			targetProxy = 0168CCB8295DA07700B093CE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -615,7 +632,7 @@
 		};
 		0168CCC2295DA07700B093CE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 295AB571550CCF4F1C22C378 /* Pods-MobileLifeTest.debug.xcconfig */;
+			baseConfigurationReference = C3DE520D5791F8DC7C134B13 /* Pods-MobileLife Tests-MobileLifeTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -642,7 +659,7 @@
 		};
 		0168CCC3295DA07700B093CE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5240E93AEE3E03C4BEA884E4 /* Pods-MobileLifeTest.release.xcconfig */;
+			baseConfigurationReference = 470DFE6E2272DA8424539E66 /* Pods-MobileLife Tests-MobileLifeTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -669,6 +686,7 @@
 		};
 		0168CCC5295DA07700B093CE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37AA58E728EE96EF7153BAE3 /* Pods-MobileLife Tests-MobileLifeTestTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -688,6 +706,7 @@
 		};
 		0168CCC6295DA07700B093CE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 332578D8224203B010F4BE1A /* Pods-MobileLife Tests-MobileLifeTestTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -702,40 +721,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MobileLifeTest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MobileLifeTest";
-			};
-			name = Release;
-		};
-		0168CCC8295DA07700B093CE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brickandblockstore.MobileLifeTestUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MobileLifeTest;
-			};
-			name = Debug;
-		};
-		0168CCC9295DA07700B093CE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.brickandblockstore.MobileLifeTestUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = MobileLifeTest;
 			};
 			name = Release;
 		};
@@ -765,15 +750,6 @@
 			buildConfigurations = (
 				0168CCC5295DA07700B093CE /* Debug */,
 				0168CCC6295DA07700B093CE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0168CCC7295DA07700B093CE /* Build configuration list for PBXNativeTarget "MobileLifeTestUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0168CCC8295DA07700B093CE /* Debug */,
-				0168CCC9295DA07700B093CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

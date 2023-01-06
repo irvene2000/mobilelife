@@ -22,6 +22,7 @@ class ImageDetailView: UIView {
     var infoTableView: UITableView = {
         let newTableView = UITableView(frame: .zero, style: .plain)
         newTableView.translatesAutoresizingMaskIntoConstraints = false
+        newTableView.showsVerticalScrollIndicator = false
         return newTableView
     }()
     
@@ -85,7 +86,7 @@ class ImageDetailView: UIView {
     // MARK: Setup Subviews
     
     private func setupSubviews() {
-        backgroundColor = .white
+        backgroundColor = .black
         
         addSubview(stackView)
         stackView.addArrangedSubview(primaryView)
@@ -98,9 +99,9 @@ class ImageDetailView: UIView {
         
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             secondaryViewHeightConstraint,
             secondaryViewWidthConstraint
         ])

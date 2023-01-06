@@ -20,6 +20,7 @@ class ImageCollectionViewController: UIViewController {
     var viewModel: ImageCollectionViewModelType = ImageCollectionViewModel()
     
     // MARK: Private
+    
     private var disposeBag: DisposeBag! = DisposeBag()
     private var visibleIndexPath: IndexPath?
     private var imageScale: CGFloat {

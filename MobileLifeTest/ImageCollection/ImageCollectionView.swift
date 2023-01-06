@@ -24,7 +24,7 @@ class ImageCollectionView: UIView {
     
     // MARK: Private
     
-    lazy var collectionViewFlowLayout: SnappingCollectionViewFlowLayout = {
+    private lazy var collectionViewFlowLayout: SnappingCollectionViewFlowLayout = {
        let newLayout = SnappingCollectionViewFlowLayout()
         newLayout.scrollDirection = .horizontal
         return newLayout

@@ -54,7 +54,6 @@ class TitleValueTableViewCell: UITableViewCell {
     // MARK: - Internal API -
     
     override func prepareForReuse() {
-        viewModel = nil
         disposeBag = DisposeBag()
     }
     

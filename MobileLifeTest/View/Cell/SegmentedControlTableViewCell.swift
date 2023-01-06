@@ -56,7 +56,6 @@ class SegmentedControlTableViewCell: UITableViewCell {
         contentView.addSubview(segmentedControl)
         
         let segmentedControlLeadingConstraint = segmentedControl.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: 20.0)
-        segmentedControlLeadingConstraint.priority = UILayoutPriority(rawValue: 749)
         
         NSLayoutConstraint.activate([
             segmentedControl.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
